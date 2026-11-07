@@ -16,11 +16,12 @@ Send `Authorization: Bearer <FIREBASE_ID_TOKEN>`.
 - `GET /organizations/:id/widget-keys` — list widget key metadata
 - `DELETE /organizations/:id/widget-keys/:keyId` — revoke widget key
 - `GET /organizations/:id/usage` — latest usage events
-- `POST /briefs/generate`, `GET /briefs`, `GET /briefs/:id`, `DELETE /briefs/:id`
+- `POST /briefs/generate`, `GET /briefs`, `GET /briefs/:id`, `PATCH /briefs/:id`, `POST /briefs/:id/refine`, `DELETE /briefs/:id`
 
 ## Marketplace server integration
 Send `X-ScopePilot-API-Key: sp_live_...` from your backend only.
 - `POST /integrations/briefs/generate`
+- `POST /integrations/briefs/:id/refine`
 
 Example:
 ```json
