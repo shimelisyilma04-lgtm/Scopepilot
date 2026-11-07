@@ -1,25 +1,37 @@
 # ScopePilot
 
-AI-powered project-scoping infrastructure for freelance and service marketplaces. ScopePilot transforms rough project ideas into structured, editable briefs with requirements, deliverables, milestones, acceptance criteria, assumptions and clarification questions.
+AI-powered project-scoping infrastructure for freelance and service marketplaces. ScopePilot turns rough project ideas into structured, editable briefs and can integrate through a server API or an embeddable JavaScript widget.
 
 ## Monorepo
-- `apps/web`: React + TypeScript + Vite dashboard
-- `apps/api`: Express REST API and AI brief engine
-- `packages/shared`: shared types
-- `packages/widget`: embeddable JavaScript widget source
-- `docs`: API, security, deployment and integration notes
+- `apps/web`: React + TypeScript + Vite dashboard with Firebase Google sign-in
+- `apps/api`: Express API, Gemini brief engine, Firebase Admin authentication and Firestore persistence
+- `packages/shared`: shared TypeScript contracts
+- `packages/widget`: embeddable JavaScript widget source and browser bundle build
+- `docs`: API, security, deployment and marketplace integration guides
 
 ## Local development
-1. Install Node.js 20 or newer.
-2. Copy `.env.example` to `.env` and optionally set `GEMINI_API_KEY`.
-3. Run `npm install`.
-4. Run `npm run dev`.
-5. Open the Vite URL shown in the terminal. The API listens on port 8787 by default.
+1. Use Node.js 20 or newer.
+2. Create a Firebase project, enable Firestore and Google Authentication.
+3. Copy `.env.example` to `.env`; configure Firebase web values, Firebase Admin credentials and `GEMINI_API_KEY`.
+4. Run `npm install`.
+5. Run `npm run dev`.
+6. Open the Vite URL shown in the terminal. The API listens on port 8787 by default.
 
-Run `npm test`, `npm run typecheck` and `npm run build` before deployment.
+Build and checks:
+- `npm run typecheck`
+- `npm test`
+- `npm run build`
 
-## Current implementation status
-The repository contains the initial web app, brief-generation endpoint, Gemini provider integration, widget source, shared types, Render Blueprint, starter tests and documentation. Firestore persistence, user authentication, production API-key issuance, organization isolation, usage metering, complete CRUD/refinement endpoints and full test coverage are not implemented yet. The widget is an integration starter and does not yet authenticate its public key at the API. Do not use it for production marketplace data until those controls are completed.
+## Marketplace integration
+- Server-to-server: create an organization and a hashed `sp_live_` API key; call `POST /api/v1/integrations/briefs/generate` from your backend.
+- Embeddable widget: create a `sp_pub_` widget key with allowed origins, build `packages/widget/dist/scopepilot.js`, and embed it using the documented snippet.
+
+See [Marketplace integration](docs/INTEGRATION.md), [API reference](docs/API.md), and [Deployment](docs/DEPLOYMENT.md).
+
+## Implementation status
+Implemented foundation includes Firebase sign-in, user-scoped Firestore brief persistence, validated Gemini output, organization creation, server API-key issuance and revocation, organization usage events, an origin-restricted widget key flow, a widget API, and Render/CI configuration.
+
+Not yet complete or independently verified: organization invitations and roles, per-organization quotas and billing enforcement, rate limits backed by shared storage, webhooks, advanced brief refinement/editing, admin analytics, complete tenant-isolation/security test coverage, and production deployment validation. The widget's public key plus Origin check is a browser integration control, not strong authentication against arbitrary HTTP clients. Do not treat the current implementation as production-certified.
 
 ## Security
-Never expose AI provider keys, Firebase Admin credentials or private API keys in browser code. Production marketplace integrations require the platform's written authorization and credentials.
+Never expose `sp_live_` keys, Gemini credentials or Firebase Admin credentials in browser code. Marketplace integrations require the platform's permission and deployment changes.
