@@ -36,3 +36,7 @@ The widget key is public and must never be treated as a server secret. Origin va
 
 ## Errors
 Errors contain `error.code` and `error.message`. Invalid input returns HTTP 400; missing/invalid credentials return HTTP 401; unauthorized origin/organization returns HTTP 403; missing records return HTTP 404; generation or provider failures return HTTP 5xx.
+
+
+## Usage quotas
+New organizations start with a 100-brief monthly quota. Successful marketplace and widget generations/refinements consume one unit. The generation response includes `usage.used`, `usage.limit`, and `usage.remaining`. When the quota is reached, the API returns HTTP 429 with `QUOTA_EXCEEDED`.
