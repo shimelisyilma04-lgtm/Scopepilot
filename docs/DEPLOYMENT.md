@@ -10,7 +10,6 @@ Set:
 - `FIREBASE_PROJECT_ID`
 - `FIREBASE_CLIENT_EMAIL`
 - `FIREBASE_PRIVATE_KEY` (store the full service-account private key as a secret; newlines are normalized by the app)
-- `WIDGET_ALLOWED_ORIGINS` (comma-separated exact trusted origins)
 
 Alternatively configure Google Application Default Credentials where supported.
 
@@ -28,4 +27,4 @@ Enable Google sign-in in Firebase Authentication and add the deployed frontend h
 Create/enable Firestore in the same Firebase project. The Admin SDK uses server credentials and creates collections as needed.
 
 ## Before production launch
-Configure real origins, validate health checks, deploy, test sign-in and a saved brief, test an organization API key from a server environment, and verify that a second user/organization cannot read the first one's records. Widget public-key security, quotas and billing enforcement are not yet complete.
+Configure the Firebase project, deploy the Firestore rules in `firestore.rules`, add the frontend hostname to Firebase Auth authorized domains, validate health checks, test sign-in and a saved brief, test an organization API key from a server environment, and verify that a second user/organization cannot read the first one's records. Widget origin allowlists are configured per widget key. Public widget keys are not strong authentication against custom HTTP clients; quotas and billing enforcement are not yet complete.
