@@ -12,7 +12,7 @@
 
 ## Remaining before production
 - Replace simple per-process rate limits with shared distributed limits.
-- Add per-organization quotas and billing enforcement.
+- Add configurable quota plans and billing enforcement (a basic 100-brief monthly organization quota is currently enforced).
 - Add key expiration/rotation policy and audit logs.
 - Add origin-bound public widget credentials; never use server API keys in the widget.
 - Add abuse monitoring, webhook signing, backup/retention policies and a security review.
