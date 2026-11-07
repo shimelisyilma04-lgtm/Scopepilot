@@ -27,6 +27,7 @@ Never send a `sp_live_` key to browser code.
     publicKey: "sp_pub_REPLACE_ME",
     apiUrl: "https://YOUR_API_HOST",
     title: "Clarify your project",
+    mode: "inline", // or "modal"
     onComplete: function (brief) { console.log(brief); }
   });
 </script>
