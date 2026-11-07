@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: scopepilot-api
+    runtime: node
+    buildCommand: npm install && npm run build -w @scopepilot/shared && npm run build -w @scopepilot/api
+    startCommand: npm run start -w @scopepilot/api
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false
+  - type: web
+    name: scopepilot-web
+    runtime: static
+    buildCommand: npm install && npm run build -w @scopepilot/shared && npm run build -w @scopepilot/web
+    staticPublishPath: apps/web/dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
