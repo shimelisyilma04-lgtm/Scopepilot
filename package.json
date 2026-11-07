@@ -1,0 +1,22 @@
+{
+  "name": "scopepilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/web",
+    "apps/api",
+    "packages/shared",
+    "packages/widget"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"npm run dev -w @scopepilot/api\" \"npm run dev -w @scopepilot/web\"",
+    "build": "npm run build -w @scopepilot/shared && npm run build -w @scopepilot/api && npm run build -w @scopepilot/web && npm run build -w @scopepilot/widget",
+    "test": "npm run test -w @scopepilot/api",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  }
+}
